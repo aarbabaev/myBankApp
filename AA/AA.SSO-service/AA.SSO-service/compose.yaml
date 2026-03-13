@@ -1,0 +1,7 @@
+﻿services:
+  aa.sso-service2:
+    image: aa.sso-service2
+    build:
+      context: .
+      dockerfile: AA.SSO-service2/Dockerfile
+
