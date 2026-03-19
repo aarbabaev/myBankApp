@@ -34,7 +34,7 @@ public class AppDbContext : DbContext
         {
             builder.HasKey(rt => rt.Id);
             builder.HasIndex(rt => rt.TokenHash).IsUnique();
-            builder.Property(rt => rt.TokenHash).IsRequired().HasMaxLength(200);
+            builder.Property(rt => rt.TokenHash).IsRequired().HasMaxLength(256);
         });
     }
 

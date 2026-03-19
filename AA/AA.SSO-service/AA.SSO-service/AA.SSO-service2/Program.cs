@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 
@@ -53,25 +54,27 @@ builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer((document, context, cancellationToken) =>
     {
-        // Добавляем требование Bearer токена в UI
         document.Components ??= new();
         document.Components.SecuritySchemes.Add("Bearer", new()
         {
-            Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+            Type = SecuritySchemeType.Http,
             Scheme = "bearer",
             BearerFormat = "JWT",
             Description = "Введите JWT токен."
         });
 
-        document.SecurityRequirements ??= new List<Microsoft.OpenApi.Models.OpenApiSecurityRequirement>();
-        document.SecurityRequirements.Add(new()
+        document.SecurityRequirements ??= new List<OpenApiSecurityRequirement>();
+        var item = new OpenApiSecurityRequirement
         {
-            [new Microsoft.OpenApi.Models.OpenApiSecurityScheme 
-            { 
-                Reference = new Microsoft.OpenApi.Models.OpenApiReference 
-                    { Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme, Id = "Bearer" } 
+            [new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme, Id = "Bearer"
+                }
             }] = Array.Empty<string>()
-        });
+        };
+        document.SecurityRequirements.Add(item);
 
         return Task.CompletedTask;
     });

@@ -6,8 +6,6 @@ public class RefreshToken
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid UserId { get; set; }
-    
-    [MaxLength(256)]
     public string TokenHash { get; set; } = string.Empty;
     public DateTime ExpiryDate { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
