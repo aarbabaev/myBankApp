@@ -33,8 +33,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<RefreshToken>(builder =>
         {
             builder.HasKey(rt => rt.Id);
-            builder.HasIndex(rt => rt.Token).IsUnique();
-            builder.Property(rt => rt.Token).IsRequired().HasMaxLength(200);
+            builder.HasIndex(rt => rt.TokenHash).IsUnique();
+            builder.Property(rt => rt.TokenHash).IsRequired().HasMaxLength(200);
         });
     }
 
