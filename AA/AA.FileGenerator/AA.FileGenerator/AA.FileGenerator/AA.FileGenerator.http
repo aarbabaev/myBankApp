@@ -1,0 +1,6 @@
+@AA.FileGenerator_HostAddress = http://localhost:5213
+
+GET {{AA.FileGenerator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
