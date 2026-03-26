@@ -1,0 +1,40 @@
+<div class="card" [class.break]="isBreak()">
+  <h1>Pomodoro</h1>
+
+  <div class="tabs">
+    @for (m of modes; track m) {
+      <button
+        class="tab"
+        [class.active]="mode() === m"
+        (click)="setMode(m)">
+        {{ modeLabels[m] }}
+      </button>
+    }
+  </div>
+
+  <div class="timer-ring">
+    <svg width="200" height="200" viewBox="0 0 200 200">
+      <circle class="ring-bg" cx="100" cy="100" r="88" />
+      <circle
+        class="ring-progress"
+        cx="100" cy="100" r="88"
+        [style.stroke-dashoffset]="ringOffset()" />
+    </svg>
+    <div class="timer-display">
+      {{ minutes() | number:'2.0-0' }}:{{ seconds() | number:'2.0-0' }}
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" (click)="toggleTimer()">
+      @if (running()) { Pause }
+      @else if (remaining() < total()) { Resume }
+      @else { Start }
+    </button>
+    <button class="btn btn-ghost" (click)="reset()">Reset</button>
+  </div>
+
+  <div class="sessions">
+    Sessions completed: <span>{{ sessions() }}</span>
+  </div>
+</div>
